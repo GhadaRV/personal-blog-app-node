@@ -5,7 +5,7 @@ const app = express();
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 const commentRoutes = require('./routes/comments');
-
+require('dotenv').config();
 
 app.use(cors());
 
@@ -14,7 +14,7 @@ app.use(express.json());
 
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/myapp', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
