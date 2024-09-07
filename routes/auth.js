@@ -8,7 +8,6 @@ const router = express.Router();
 // Sign Up Route
 router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
-
     try {
         let user = await User.findOne({ username });
         let emailCheck = await User.findOne({ email });
@@ -34,10 +33,10 @@ router.post('/signup', async (req, res) => {
 
 // Login Route
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
-        let user = await User.findOne({ username });
+        let user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ msg: 'Invalid credentials' });
         }
