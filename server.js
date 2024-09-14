@@ -7,11 +7,16 @@ const postRoutes = require('./routes/posts');
 const commentRoutes = require('./routes/comments');
 require('dotenv').config();
 
-app.use(cors());
-
 app.use(express.json());
 
 
+const corsOptions = {
+    origin: 'https://www.orchipro.fr',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
