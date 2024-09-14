@@ -10,14 +10,21 @@ require('dotenv').config();
 app.use(express.json());
 
 
+const allowedOrigins = ['https://www.orchipro.fr', 'http://localhost:3000'];
+
 app.use(cors({
-    origin: 'https://www.orchipro.fr',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     allowedHeaders: ['Content-Type', 'x-auth-token'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     preflightContinue: false,
     optionsSuccessStatus: 204,
 }));
-
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
