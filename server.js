@@ -10,13 +10,14 @@ require('dotenv').config();
 app.use(express.json());
 
 
-const corsOptions = {
+app.use(cors({
     origin: 'https://www.orchipro.fr',
+    allowedHeaders: ['Content-Type', 'x-auth-token'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-};
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+}));
 
-app.use(cors(corsOptions));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
